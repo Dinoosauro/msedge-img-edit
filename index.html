@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+            padding: 15px;
+            color: rgb(240, 240, 240);
+            background-color: rgb(22, 22, 22);
+        }
+
+        img {
+            max-width: 70vw;
+            max-height: 50vh;
+        }
+        .dialogInternal {
+    height: 50vh;
+    max-height: 50vh;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+        button {
+            background-color: rgb(91, 91, 91);
+            height: 50px;
+            width: 35%;
+            border-radius: 8px;
+            color: rgb(240, 240, 240);
+            margin-right: 25px;
+            padding-left: 8px;
+            padding-right: 8px;
+            font-size: 0.9rem;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .lightbody {
+            color: rgb(22, 22, 22);
+            background-color: rgb(245, 245, 245);
+            /* Not pure white */
+        }
+
+        button:hover {
+            cursor: pointer;
+            background-color: rgb(110, 110, 110) !important;
+        }
+
+        .lightbtn {
+            background-color: rgb(170, 170, 170) !important; 
+            border-color: rgb(170,170,170) !important;
+            color: rgb(22, 22, 22) !important;
+        }
+
+        .lightbtn:hover {
+            background-color: rgb(185, 185, 185);
+        }
+
+        .accent {
+            background-color: #283593 !important;
+            border-color: #283593 !important;
+        }
+
+        .lightaccent {
+            background-color: #26A69A !important;
+            border-color: #26A69A !important;
+        }
+
+        .accent:hover {
+            background-color: #3949AB !important;
+        }
+
+        .lightaccent:hover {
+            background-color: #80CBC4 !important;
+        }
+
+        a {
+            color: #2196F3
+        }
+
+        .lighta {
+            color: #0D47A1;
+        }
+
+        a:hover {
+            cursor: pointer;
+            color: #BBDEFB
+        }
+
+        .lighta:hover {
+            color: #1976D2 !important;
+        }
+
+        .right {
+            margin-right: 15px;
+        }
+
+        dialog {
+            background-color: rgb(80, 80, 80);
+            border-radius: 8px;
+            border-color: rgb(240, 240, 240);
+            color: rgb(240, 240, 240);
+            max-height: 80vh;
+            overflow-y: show;
+            margin: 25px;
+            position: absolute;
+            top: 25px;
+        }
+
+        .lightdialog {
+            background-color: rgb(210, 210, 210);
+            border-color: rgb(51, 51, 51);
+            color: rgb(22, 22, 22);
+        }
+    </style>
+</head>
+
+<body>
+    <dialog id="privacyDialog">
+        <div class="dialogInternal">
+            <h2>Privacy</h2><l>msedge-img-edit doesn't send any of your images or any other data to a server.<br><br>All of the data is elaborated locally. Hosting is provided by GitHub pages, and, to make this page a little decent-looking, a font (Work Sans) is downloaded from Google Fonts' servers. msedge-img-edit doesn't share anything with them.<br><br>msedge-img-edit saves in the website's isolated local storage the theme the user selected. This is the only data msedge-img-edit saves on your device, and you can delete it when you want from your browser's settings.</l>
+            <br><br>
+            <button class="accent" onclick="manageDialog('privacyDialog', false)">Got it</button>    
+        </div>
+    </dialog>
+    <dialog id="licenseDialog">
+        <div class="dialogInternal">
+            <h2>License</h2><l>This website is licensed under the MIT license. You can find a copy of it below.<br><br>MIT License<br><br>Copyright (c) 2023 Dinoosauro<br><br>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br><br>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.<br><br>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</l>
+            <br><br>
+            <button class="accent" onclick="manageDialog('licenseDialog', false)">Got it</button>
+        </div>
+    </dialog>
+    <h1>msedge-img-edit</h1>
+    <div id="firststep">
+        <h2>Step 1: Choose the image.</h2>
+        <i>A file picker window should have appeared when you entered here. If that's not the case, you can click the
+            button below.</i><br><br>
+        <button onclick="openPicker()" class="accent">Choose the image</button>
+        <form id="reset"><input type="file" style="display: none;" id="fileOpen"></form>
+    </div>
+    <div id="secondstep" style="display: none;">
+        <h2>Step 2: Right-click</h2>
+        <i>You can see below your image. Right click it and click on "Edit image". Then, copy the result into the
+            clipboard and click the "Convert Image" button below if you want to convert the image in JPG/WebP or resize
+            it.</i><br><br>
+        <img id="img"><br><br>
+        <button onclick="goToConvert()" class="accent">Convert Image</button><button
+            style="background-color: rgb(90,90,90); border-color: rgb(90,90,90); margin-left: 25px;" onclick="back()">Go
+            back</button>
+    </div>
+    <div style="position: absolute; bottom: 25px">
+        <a id="themechange" class="right">Change theme</a><a class="right" onclick="manageDialog('privacyDialog', true)">Privacy</a><a class="right" onclick="manageDialog('licenseDialog', true)">License</a><a href="https://github.com/Dinoosauro/msedge-img-edit">View on GitHub</a>
+    </div>
+    <script>
+        function openPicker() {
+            document.getElementById("fileOpen").click();
+        }
+        document.getElementById("fileOpen").onchange = function () {
+            if (document.getElementById("fileOpen").files) {
+                let fileRead = new FileReader();
+                fileRead.onload = function () {
+                    document.getElementById("img").src = fileRead.result;
+                }
+                fileRead.readAsDataURL(document.getElementById("fileOpen").files[0]);
+            }
+            document.getElementById("firststep").style.display = "none";
+            document.getElementById("secondstep").style.display = "inline";
+        }
+        function goToConvert() {
+            window.location.href = "https://dinoosauro.github.io/image-converter/index.html?fromedgeimg";
+        }
+        function back() {
+            document.getElementById("firststep").style.display = "inline";
+            document.getElementById("secondstep").style.display = "none";
+            document.getElementById("reset").reset();
+        }
+        let isDark = true;
+        function theme(horribleMode) {
+            let itemsToChange = [["body", "button", "a", ".accent", "dialog"], ["lightbody", "lightbtn", "lighta", "lightaccent", "lightdialog"]];
+            for (let i = 0; i < itemsToChange[0].length; i++) {
+                let getItems = document.querySelectorAll(itemsToChange[0][i]);
+                for (let x = 0; x < getItems.length; x++) {
+                    if (horribleMode) getItems[x].classList.add(itemsToChange[1][i]); else getItems[x].classList.remove(itemsToChange[1][i]);
+                }
+            }
+            isDark = !horribleMode;
+            localStorage.setItem("horriblemode", horribleMode);
+        }
+        if (localStorage.getItem("horriblemode") === 'true') theme(true);
+        document.getElementById("themechange").onclick = function () {
+            theme(isDark);
+        }
+        function manageDialog(id, show) {
+            if (show) document.getElementById(id).show(); else document.getElementById(id).close();
+        }
+        openPicker();
+    </script>
+</body>
