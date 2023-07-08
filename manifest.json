@@ -1,0 +1,16 @@
+{
+    "name": "msedge-img-edit",
+    "short_name": "msedge-img-edit",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#151515",
+    "theme_color": "#865e5e",
+    "orientation": "landscape-primary",
+    "icons": [
+        {
+            "src": "./icon.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
