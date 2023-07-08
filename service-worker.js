@@ -4,6 +4,8 @@ const filestoCache = [
     `./index.html`,
     `./manifest.json`,
     `./icon.png`,
+    `./script.js`,
+    `./style.css`,
     `https://dinoosauro.github.io/image-converter/heic2any.js`,
     'https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Work+Sans&display=swap',
 ];
