@@ -6,7 +6,7 @@ if ('serviceWorker' in navigator) {
     registerServiceWorker();
 }
 let appVersion = "1.1.1";
-fetch("https://dinoosauro.github.io/UpdateVersion/msedgeimg-updatecode").then((res) => res.text().then((text) => {if (text.replace("\n", "") !== appVersion) if (confirm(`There's a new version of image-converter. Do you want to update? [${appVersion} --> ${text.replace("\n", "")}]`)) caches.keys().then((names) => {for (let item in names) {caches.delete(item); location.reload(true);}})}).catch((e) => {console.error(e)})).catch((e) => console.error(e));
+fetch("https://dinoosauro.github.io/UpdateVersion/msedgeimg-updatecode", {cache: "no-store"}).then((res) => res.text().then((text) => {if (text.replace("\n", "") !== appVersion) if (confirm(`There's a new version of image-converter. Do you want to update? [${appVersion} --> ${text.replace("\n", "")}]`)) caches.keys().then((names) => {for (let item in names) {caches.delete(item); location.reload(true);}})}).catch((e) => {console.error(e)})).catch((e) => console.error(e));
 function openPicker() {
     document.getElementById("fileOpen").click();
 }
