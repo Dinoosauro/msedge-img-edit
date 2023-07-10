@@ -1,11 +1,11 @@
 # msedge-img-edit
-Use the Microsoft Edge's image editor for editing local photos on your device (even for macOS), and then convert the result to JPG or WebP; with HEIF/HEIC support
+Use the Microsoft Edge's image editor for editing local photos on your device (even for macOS), and then convert the result to JPG or WebP; with HEIF/HEIC and TIFF support
 
 Try it: https://dinoosauro.github.io/msedge-img-edit/
 
 ## Why this
 There are two reasons to this:
-- Microsoft Edge doesn't support HEIC/HEIF photos. In this way, also HEIC/HEIF photos can be edited
+- Microsoft Edge doesn't support HEIC/HEIF/TIFF photos. In this way, also HEIC/HEIF/TIFF photos can be edited
 - Even if in Windows it's possible to edit the other image formats natively, on Linux and macOS Microsoft Edge doesn't permit to edit image files saved on the device, but only images from a webpage. So, what this webpage does is to allow the user to choose an image, and then it'll be displayed in the webpage. The user can now right click and edit the image with the Microsoft Edge tools. 
 
 If the user wants, they can compress their image as a JPG/WebP or resize it thanks to [image-converter](https://dinoosauro.github.io/image-converter/). To do that, copy the edited image in the clipboard, and then click on the "Convert image" button. Then select the "Copy from clipboard" button from the new page and the converted JPG/WebP will be downloaded. For more information about image-converter, see [this GitHub page](https://github.com/Dinoosauro/image-converter).
