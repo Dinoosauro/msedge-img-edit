@@ -5,21 +5,57 @@ if ('serviceWorker' in navigator) {
     };
     registerServiceWorker();
 }
-let appVersion = "1.1.1";
+let appVersion = "1.1.2";
 fetch("https://dinoosauro.github.io/UpdateVersion/msedgeimg-updatecode", {cache: "no-store"}).then((res) => res.text().then((text) => {if (text.replace("\n", "") !== appVersion) if (confirm(`There's a new version of image-converter. Do you want to update? [${appVersion} --> ${text.replace("\n", "")}]`)) caches.keys().then((names) => {for (let item in names) {caches.delete(item); location.reload(true);}})}).catch((e) => {console.error(e)})).catch((e) => console.error(e));
 function openPicker() {
     document.getElementById("fileOpen").click();
 }
+function getOptionalLibraries(url) {
+    return new Promise((resolve, reject) => {
+        let contentLoader = document.createElement("script");
+        contentLoader.src = url
+        contentLoader.setAttribute("crossorigin", "anonymous");
+        contentLoader.onload = function () {
+            resolve("");
+        }
+        document.body.append(contentLoader);
+    });
+}
+function getTiff(dataURL) {
+    if (!localTiff) {
+        getOptionalLibraries("https://cdn.jsdelivr.net/npm/utif@3.1.0/UTIF.min.js").then(() => {
+            continueTiff();
+        })
+    } else {
+        continueTiff();
+    }
+    function continueTiff() {
+            const base64 = dataURL.split(",")[1];
+            const binary = atob(base64);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+                bytes[i] = binary.charCodeAt(i);
+            }
+            let img = bytes.buffer;
+            var ifds = UTIF.decode(img);
+            UTIF.decodeImage(img, ifds[0])
+            var rgba = UTIF.toRGBA8(ifds[0]);
+            var canvas = document.createElement("canvas");
+            canvas.width = ifds[0].width;
+            canvas.height = ifds[0].height;
+            var ctx = canvas.getContext("2d");
+            var imgData = ctx.createImageData(canvas.width, canvas.height);
+            imgData.data.set(rgba);
+            ctx.putImageData(imgData, 0, 0);
+            document.getElementById("img").src = canvas.toDataURL("image/png");
+}
+}
 function getHeif(getItem) {
     if (!localHeic) {
-        let heicLoader = document.createElement("script");
-        heicLoader.src = "https://dinoosauro.github.io/image-converter/heic2any.js";
-        heicLoader.setAttribute("crossorigin", "anonymous");
-        heicLoader.onload = function () {
+        getOptionalLibraries("https://dinoosauro.github.io/image-converter/heic2any.js").then(() => {
             localHeic = true;
             getPng();
-        }
-        document.body.append(heicLoader);
+        })
     } else {
         getPng();
     }
@@ -43,11 +79,22 @@ function getHeif(getItem) {
     }
 }
 let localHeic = false;
+let localTiff = false;
 document.getElementById("fileOpen").onchange = function () {
     if (document.getElementById("fileOpen").files) {
         let fileRead = new FileReader();
         fileRead.onload = function () {
-            if (document.getElementById("fileOpen").files[0].name.endsWith(".heic") || document.getElementById("fileOpen").files[0].name.endsWith(".heif")) getHeif(fileRead.result); else document.getElementById("img").src = fileRead.result;
+
+            switch(document.getElementById("fileOpen").files[0].name.substring(document.getElementById("fileOpen").files[0].name.lastIndexOf(".") + 1)) {
+                case "heic": case "heif":
+                    getHeif(fileRead.result);
+                    break;
+                case "tiff": case "tif":
+                    getTiff(fileRead.result);
+                    break;
+                default:
+                    document.getElementById("img").src = fileRead.result;
+            }
         }
         fileRead.readAsDataURL(document.getElementById("fileOpen").files[0]);
     }
@@ -80,7 +127,13 @@ for (let item of document.getElementsByClassName("hoverAnimate")) item.addEventL
 })
 
 function manageDialog(id, show) {
-    if (show) document.getElementById(id).show(); else document.getElementById(id).close();
+    if (show) {
+        document.getElementById(id).show();
+        document.getElementById(id).style.opacity = 1;
+     } else {
+        document.getElementById(id).style.opacity = 0;
+        setTimeout(() => {document.getElementById(id).close();}, 360);
+     }
 }
 function goToReEnc() {
     window.location.href = "https://dinoosauro.github.io/image-converter/index.html";
@@ -99,7 +152,16 @@ async function getClipboard() {
         for (let i = 0; i < item.types.length; i++) if (item.types[i].indexOf("image/") !== -1) isImage = i;
         if (isImage === -1) continue;
         let blob = await item.getType(item.types[isImage]);
-        if (item.types[isImage].indexOf("heic") !== -1 || item.types[isImage].indexOf("heif") !== -1) getHeif(URL.createObjectURL(blob)); else document.getElementById("img").src = URL.createObjectURL(blob);
+        switch (item.types[isImage].substring(item.types[isImage].indexOf(".") + 1)) {
+            case "heic": case "heif":
+                getHeif(URL.createObjectURL(blob));
+                break;
+                case "tiff": case "tif":
+                    getTiff(URL.createObjectURL(blob));
+                    break;
+                default:
+                    document.getElementById("img").src = URL.createObjectURL(blob);
+        }
         document.getElementById("firststep").style.display = "none";
         document.getElementById("secondstep").style.display = "inline";    
     }
@@ -111,3 +173,18 @@ window.addEventListener('beforeinstallprompt', (event) => {
     installationPrompt = event;
 });
 document.getElementById("appInstall").addEventListener("click", () => {installationPrompt.prompt();});
+for (let item of document.querySelectorAll("[data-license]")) item.addEventListener("click", () => {
+    document.getElementById("licenseLabel").innerHTML = `Copyright (c) ${item.getAttribute("data-license")}<br><br>Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+    and associated documentation files (the "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the
+    following conditions:<br><br>The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+    ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+    PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+    OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.`
+})
+document.getElementById("iconText").addEventListener("click", () => {
+    document.getElementById("licenseLabel").innerHTML = "Icons are provided by Microsoft's Fluent UI Icons.";
+})

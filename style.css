@@ -31,8 +31,8 @@ img {
 }
 
 .dialogInternal {
-    height: 50vh;
-    max-height: 50vh;
+    height: 70vh;
+    max-height: 70vh;
     overflow: hidden;
     overflow-y: scroll;
 }
@@ -116,4 +116,6 @@ dialog {
     margin: 25px;
     position: absolute;
     top: 25px;
+    transition: opacity 0.35s ease-in-out;
+    opacity: 0;
 }

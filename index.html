@@ -30,33 +30,13 @@
     <dialog id="licenseDialog">
         <div class="dialogInternal">
             <h2>License</h2>
-            <l>This website is licensed under the MIT license. You can find a copy of it below.<br><br>MIT
-                License<br><br>Copyright (c) 2023 Dinoosauro<br><br>Permission is hereby granted, free of charge, to any
-                person obtaining a copy of this software and associated documentation files (the "Software"), to deal in
-                the Software without restriction, including without limitation the rights to use, copy, modify, merge,
-                publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-                Software is furnished to do so, subject to the following conditions:<br><br>The above copyright notice
-                and this permission notice shall be included in all copies or substantial portions of the
-                Software.<br><br>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-                INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE AND
-                NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-                OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-                CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</l><br><br><br><br>
-            <l>This website uses also the <a href="https://github.com/alexcorvi/heic2any">heic2any library</a> to decode
-                HEIC pictures. Its license is reported below<br><br> MIT License<br><br>Copyright (c) 2020 Alex
-                Corvi<br><br>Permission is hereby granted, free of charge, to any person obtaining a copy of this
-                software and associated documentation files (the "Software"), to deal in the Software without
-                restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute,
-                sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished
-                to do so, subject to the following conditions:<br><br>The above copyright notice and this permission
-                notice shall be included in all copies or substantial portions of the Software.<br><br>THE SOFTWARE IS
-                PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-                WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-                THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-                ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-                USE OR OTHER DEALINGS IN THE SOFTWARE.<br><br><br>Finally, the website icon is provided by <a
-                    href="https://github.com/microsoft/fluentui-system-icons/tree/main">Microsoft's Fluent Design
-                    Icons</a></l>
+            <l>Click on a name to see their license.</l>
+            <div style="display: flex; overflow-x: auto;">
+                <a class="right hoverAnimate" data-license="2023 Dinoosauro">msedge-img-edit</a><a class="right hoverAnimate" data-license="2020 Alex Corvi">heic2any</a><a class="right hoverAnimate" data-license="2017 Photopea">UTIF.js</a><a class="right hoverAnimate" id="iconText">Icons</a>
+            </div><br><br>
+            <div style="padding: 10px; border-radius: 8px; backdrop-filter: brightness(80%); -webkit-backdrop-filter: brightness(80%);">
+                <l id="licenseLabel"></l>
+            </div>
             <br><br>
             <button class="accent" onclick="manageDialog('licenseDialog', false)">Got it</button>
         </div>
@@ -77,7 +57,7 @@
             it.</i><br><br>
         <img id="img"><br><br>
         <button onclick="goToConvert()" class="accent hoverAnimate">Convert Image</button><button
-            style="background-color: rgb(90,90,90); border-color: rgb(90,90,90); margin-left: 25px;" onclick="back()">Go
+            style="background-color: rgb(90,90,90); border-color: rgb(90,90,90); margin-left: 25px;" class="hoverAnimate" onclick="back()">Go
             back</button>
     </div>
     <div style="position: absolute; bottom: 25px">

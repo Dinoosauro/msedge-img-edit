@@ -8,6 +8,7 @@ const filestoCache = [
     `./style.css`,
     `https://dinoosauro.github.io/image-converter/heic2any.js`,
     'https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Work+Sans&display=swap',
+    'https://cdn.jsdelivr.net/npm/utif@3.1.0/UTIF.min.js',
 ];
 self.addEventListener('install', e => {
     e.waitUntil(
